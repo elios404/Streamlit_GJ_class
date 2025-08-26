@@ -58,7 +58,7 @@ vectorstore = Chroma.from_documents(
     documents=texts,
     embedding=embeddings,
     collection_name="chroma_assignment",
-    persist_directory='./chroma_assign_db'
+    persist_directory='./chroma_db'
 )
 
 # %%
