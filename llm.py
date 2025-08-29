@@ -45,12 +45,12 @@ def get_dictionary_chain():
         질문: {{question}}
 
     """)
-    dictionary_chain = prompt2 | llm | StrOutputParser()
+    dictionary_chain = prompt2 | llm | StrOutputParser() # 거주자로 변경된 질문 리턴
 
     return dictionary_chain
 
 
-def get_retriever():
+def get_retriever(): # DB로 부터 쿼리와 유사한 문서를 뽑는 함수
     embedding = OpenAIEmbeddings(model='text-embedding-3-large')
     index_name = 'tax-index'
     vectorstore = PineconeVectorStore.from_existing_index(
@@ -62,7 +62,7 @@ def get_retriever():
     return retriever
 
 
-def get_history_retriever():
+def get_history_retriever(): # 생략된 쿼리에서 기존 대화를 통해서 맥락에 맞는 쿼리로 만들고 그것과 유사한 문서를 찾음
     retriever = get_retriever()
     llm = get_llm()
 
@@ -77,7 +77,7 @@ def get_history_retriever():
     contextualize_q_prompt = ChatPromptTemplate.from_messages(
         [
             ("system", contextualize_q_system_prompt),
-            MessagesPlaceholder("chat_history"), # 이게 정확하게 뭐하는건가? chat_history는 어디서 가져오는 건가? 혹은 그냥 프롬프트에 넣는것?
+            MessagesPlaceholder("chat_history"), # 이게 정확하게 뭐하는건가? chat_history는 어디서 가져오는 건가? 혹은 그냥 프롬프트에 넣는것? 이건 어디에 저장?
             ("human", "{input}"),
         ]
     )
